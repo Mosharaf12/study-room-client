@@ -1,12 +1,14 @@
-import React from "react";
+import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 
 const AddStudent = () => {
 
     const navigate = useNavigate();
+    const [loading, setLoading] = useState(false)
 
     const handleSubmit = (event) => {
         event.preventDefault();
+        setLoading(true);
        const form = event.target;
        const name = form.name.value;
        const age = form.age.value;
@@ -35,6 +37,7 @@ const AddStudent = () => {
         console.log(data)
         alert("student added successfully")
         form.reset();
+        setLoading(false)
         navigate("/student");
        })
 
@@ -66,7 +69,12 @@ const AddStudent = () => {
           <label className="label"><span className="label-text">Parent Number</span></label>
           <input type="number" name="number" placeholder="Type here" className="input input-bordered w-ful " required/>
         </div>
-        <button type="submit" className="btn bg-[#2f4e6c] w-full mt-3 border-none">Add</button>
+        {
+          loading ? 
+          <button className="btn loading bg-[#2f4e6c] w-full mt-3 border-none">Adding</button>
+          :
+          <button type="submit" className="btn bg-[#2f4e6c] w-full mt-3 border-none">Add</button>
+        }
       </form>
     </div>
   );
